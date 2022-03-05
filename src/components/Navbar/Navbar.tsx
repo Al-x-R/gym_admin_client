@@ -13,7 +13,7 @@ import logo from '../../assets/images/Maximus-Logo.png';
 
 const Navbar = () => {
   return (
-    <Box minH="480px">
+    <Box minH="84px">
       <Box as="header" bg={mode('white', 'gray.800')} borderBottomWidth="1px">
         <Box maxW="7xl" mx="auto" py="4" px={{base: '6', md: '8'}}>
           <Flex as="nav" justify="space-between">
