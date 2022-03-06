@@ -15,12 +15,12 @@ export const Sidebar: React.FC = () => {
   return (
     <Flex
       height="calc(100vh - 84px)"
-      width={{ base: 'full', sm: 'xs' }}
+      width={{ base: 'full', sm: '2xs' }}
       direction="column"
       bg={mode('white', 'gray.800')}
       color="white"
-      px={6}
-      py={8}
+      px={5}
+      py={7}
     >
       <Stack spacing={6}>
         <Stack>

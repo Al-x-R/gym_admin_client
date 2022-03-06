@@ -21,12 +21,12 @@ const Navbar = () => {
               <Box as="a" href="/" rel="home" pr="4">
                 <Image maxW="150px" src={logo} />
               </Box>
-              <HStack display={{base: 'none', lg: 'flex'}} spacing="8" pt='3'>
-                <NavLink.Desktop>Memberships</NavLink.Desktop>
-                <NavLink.Desktop active>Clients</NavLink.Desktop>
-                <NavLink.Desktop>Trainers</NavLink.Desktop>
-                <NavLink.Desktop>Workouts</NavLink.Desktop>
-              </HStack>
+              {/*<HStack display={{base: 'none', lg: 'flex'}} spacing="8" pt='3'>*/}
+              {/*  <NavLink.Desktop>Memberships</NavLink.Desktop>*/}
+              {/*  <NavLink.Desktop active>Clients</NavLink.Desktop>*/}
+              {/*  <NavLink.Desktop>Trainers</NavLink.Desktop>*/}
+              {/*  <NavLink.Desktop>Workouts</NavLink.Desktop>*/}
+              {/*</HStack>*/}
             </Flex>
             <Flex align="center">
               <HStack spacing="8" display={{base: 'none', md: 'flex'}} pt='3'>

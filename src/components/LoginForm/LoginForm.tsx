@@ -13,9 +13,25 @@ import { Card } from './Card'
 import { DividerWithText } from './DividerWithText'
 import { Link } from './Link'
 import { Form } from './Form'
-import { Logo } from './Logo'
 
-const LoginForm = () => (
+const LoginForm = () => {
+
+  const onSubmit = () => {
+    fetch('http://localhost:5000/api/admins/login',
+      {method: 'POST',
+        body: JSON.stringify({
+          // adminName: this.state.idValue,
+          // password: this.state.pwValue
+        }),}
+  )
+      .then(res => res.json())
+      .then(
+        res => res,
+        error => error
+      )
+  }
+
+  return (
   <Box
     bg={useColorModeValue('gray.50', 'inherit')}
     minH="100vh"
@@ -46,6 +62,6 @@ const LoginForm = () => (
       </Card>
     </Box>
   </Box>
-)
+)}
 
 export default LoginForm;
