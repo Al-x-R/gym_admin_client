@@ -18,7 +18,7 @@ export const LoginForm = () => {
   } = useForm();
 
   const toast = useToast();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<FieldValues> = (values: { [x: string]: any; }) => {
     axios.post('http://localhost:5000/api/admins/login', {admin: values})
@@ -32,9 +32,11 @@ export const LoginForm = () => {
             isClosable: true,
           });
 
+          localStorage.setItem('token', response.data.admin.token);
+
           setTimeout(() => {
-            navigate('/')
-          }, 1500)
+            navigate('/');
+          }, 1500);
         }
       })
       .catch((error) => {
