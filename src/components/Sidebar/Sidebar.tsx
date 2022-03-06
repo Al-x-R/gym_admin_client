@@ -27,6 +27,7 @@ export const Sidebar: React.FC = () => {
           <NavLink label="Clients" icon={FaUser} isActive />
           <NavLink label="Memberships" icon={FaRegIdCard} />
           <NavLink label="Trainers" icon={FaNetworkWired} />
+          <NavLink label="Admins" icon={FaNetworkWired} />
           <NavLink label="Workouts" icon={FaFire} />
           <NavLink label="Statistics" icon={FaRegChartBar} />
         </Stack>
