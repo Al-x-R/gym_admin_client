@@ -11,7 +11,7 @@ import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { PasswordField } from './PasswordField';
 import axios from 'axios';
 
-export const Form = () => {
+export const LoginForm = () => {
   const {
     handleSubmit,
     register,

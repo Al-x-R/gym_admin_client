@@ -12,25 +12,9 @@ import { FaFacebook, FaGithub, FaGoogle } from 'react-icons/fa'
 import { Card } from './Card'
 import { DividerWithText } from './DividerWithText'
 import { Link } from './Link'
-import { Form } from './Form'
+import { LoginForm } from './LoginForm'
 
-const LoginForm = () => {
-
-  const onSubmit = () => {
-    fetch('http://localhost:5000/api/admins/login',
-      {method: 'POST',
-        body: JSON.stringify({
-          // adminName: this.state.idValue,
-          // password: this.state.pwValue
-        }),}
-  )
-      .then(res => res.json())
-      .then(
-        res => res,
-        error => error
-      )
-  }
-
+const Auth = () => {
   return (
   <Box
     bg={useColorModeValue('gray.50', 'inherit')}
@@ -43,7 +27,7 @@ const LoginForm = () => {
         Sign in to your account
       </Heading>
       <Card>
-        <Form />
+        <LoginForm />
         {/*<DividerWithText mt="6">or continue with</DividerWithText>*/}
         {/*<SimpleGrid mt="6" columns={3} spacing="3">*/}
         {/*  <Button color="currentColor" variant="outline">*/}
@@ -64,4 +48,4 @@ const LoginForm = () => {
   </Box>
 )}
 
-export default LoginForm;
+export default Auth;
