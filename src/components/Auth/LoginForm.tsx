@@ -54,7 +54,7 @@ export const LoginForm = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Stack spacing="6">
-        <FormControl id="email">
+        <FormControl id="adminName">
           <FormLabel>Admin name</FormLabel>
           <Input type="text" {...register('adminName', {
             required: 'This is required'

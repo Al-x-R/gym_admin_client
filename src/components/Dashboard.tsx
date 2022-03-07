@@ -27,7 +27,6 @@ const Dashboard = () => {
           <AdminsTable admins={admins}/>
         </Box>
       </Flex>
-
     </Box>
   );
 };
