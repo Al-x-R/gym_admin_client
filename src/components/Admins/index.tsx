@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import {
   Box,
   Flex,
@@ -19,20 +19,20 @@ import axios from 'axios';
 import { columns } from './_data';
 import AdminModal from './AdminModal';
 
-
-interface Admin {
+export interface IAdmin {
   adminName: string;
   id: number;
   isSuper: boolean;
 }
 
 interface AdminsList {
-  admins: Admin[]
+  admins: IAdmin[]
 }
 
 const AdminsTable: FC<AdminsList> = ({admins}) => {
   const {isOpen, onOpen, onClose} = useDisclosure();
-
+  const {isOpen: isOpenEdit, onOpen: onOpenEdit, onClose: onCloseEdit} = useDisclosure();
+  const [stateAdmin, setStateAdmin] = useState<IAdmin>();
   const toast = useToast();
 
   const createAdminHandler: SubmitHandler<FieldValues> = (values: { [x: string]: any; }) => {
@@ -51,7 +51,7 @@ const AdminsTable: FC<AdminsList> = ({admins}) => {
             duration: 1500,
             isClosable: true,
           });
-        onClose()
+          onClose();
         }
       })
       .catch((error) => {
@@ -63,6 +63,44 @@ const AdminsTable: FC<AdminsList> = ({admins}) => {
           isClosable: true,
         });
       });
+  };
+
+  const updateAdminHandler: SubmitHandler<FieldValues> = (values: { [x: string]: any; }) => {
+    if (stateAdmin?.adminName === values.adminName && stateAdmin?.isSuper === values.isSuper) {
+      onCloseEdit()
+      return
+    }
+    axios.patch('http://localhost:5000/api/admins', {admin: values}, {
+      headers: {
+        'Authorization': `Basic ${localStorage.getItem('token')}`
+      }
+    })
+      .then((response) => {
+        if (response.data) {
+          toast({
+            position: 'top',
+            title: 'Admin update',
+            status: 'success',
+            duration: 1500,
+            isClosable: true,
+          });
+          onCloseEdit();
+        }
+      })
+      .catch((error) => {
+        toast({
+          position: 'top',
+          title: error.response.data.message,
+          status: 'error',
+          duration: 5000,
+          isClosable: true,
+        });
+      });
+  };
+
+  const editAdminHandler = (admin: IAdmin) => {
+    setStateAdmin(admin);
+    onOpenEdit();
   };
 
   return (
@@ -100,7 +138,7 @@ const AdminsTable: FC<AdminsList> = ({admins}) => {
                     );
                   })}
                   <Td textAlign="right">
-                    <Button variant="link" colorScheme="blue">
+                    <Button onClick={e => editAdminHandler(row)} variant="link" colorScheme="blue">
                       Edit
                     </Button>
                   </Td>
@@ -111,6 +149,7 @@ const AdminsTable: FC<AdminsList> = ({admins}) => {
         </Table>
       </Box>
       <AdminModal isOpen={isOpen} onClose={onClose} onSubmit={createAdminHandler}/>
+      <AdminModal admin={stateAdmin} isOpen={isOpenEdit} onClose={onCloseEdit} onSubmit={updateAdminHandler}/>
     </>
   );
 };

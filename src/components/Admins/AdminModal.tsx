@@ -9,14 +9,16 @@ import {
 } from '@chakra-ui/react';
 import AdminForm from './AdminForm';
 import { FieldValues, SubmitHandler } from 'react-hook-form';
+import { IAdmin } from './index';
 
 interface IModal {
-  isOpen: boolean
-  onClose: () => void
-  onSubmit: SubmitHandler<FieldValues>
+  isOpen: boolean;
+  onClose: () => void;
+  onSubmit: SubmitHandler<FieldValues>;
+  admin?: IAdmin;
 }
 
-const AdminModal: FC<IModal> = ({isOpen, onClose, onSubmit}) => {
+const AdminModal: FC<IModal> = ({isOpen, onClose, onSubmit, admin}) => {
 
   const finalRef = useRef(null);
 
@@ -27,7 +29,7 @@ const AdminModal: FC<IModal> = ({isOpen, onClose, onSubmit}) => {
         <ModalHeader>Create new admin</ModalHeader>
         <ModalCloseButton/>
         <ModalBody>
-          <AdminForm onSubmit={onSubmit}/>
+          <AdminForm admin={admin} onSubmit={onSubmit}/>
         </ModalBody>
         <ModalFooter />
       </ModalContent>

@@ -1,16 +1,30 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { Button, FormControl, FormLabel, Input, Stack, Switch } from '@chakra-ui/react';
 import { PasswordField } from '../Auth/PasswordField';
+import { IAdmin } from './index';
 
 interface IAdminForm {
-  onSubmit: SubmitHandler<FieldValues>
+  onSubmit: SubmitHandler<FieldValues>;
+  admin?: IAdmin;
 }
-const AdminForm: FC<IAdminForm> = ({onSubmit}) => {
+
+const AdminForm: FC<IAdminForm> = ({onSubmit, admin}) => {
+  const [isChecked, setIsChecked] = useState(false);
   const {
     handleSubmit,
     register,
+    setValue
   } = useForm();
+
+  useEffect(() => {
+    if (admin) {
+      setValue('id', admin.id);
+      setValue('adminName', admin.adminName);
+      setValue('isSuper', admin.isSuper);
+      setIsChecked(admin.isSuper);
+    }
+  }, []);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -21,12 +35,15 @@ const AdminForm: FC<IAdminForm> = ({onSubmit}) => {
             required: 'This is required'
           })}/>
         </FormControl>
-        <PasswordField {...register('password', {
+        {!admin && <PasswordField {...register('password', {
           required: 'This is required'
-        })}/>
-        <Switch {...register('isSuper')} />
+        })}/>}
+        <Switch {...register('isSuper')}
+                isChecked={isChecked}
+                onChange={() => setIsChecked(!isChecked)}
+        />
         <Button type="submit" colorScheme="blue" size="lg" fontSize="md">
-          Create
+          {admin ? 'Update' : 'Create'}
         </Button>
       </Stack>
     </form>
