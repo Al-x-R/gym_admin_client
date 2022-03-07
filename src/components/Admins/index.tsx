@@ -10,7 +10,7 @@ import {
   Thead,
   Tr,
   useColorModeValue as mode,
-  useDisclosure, useToast
+  useDisclosure, useToast, Menu, MenuButton, MenuList, MenuItem
 } from '@chakra-ui/react';
 import { RiAddFill } from 'react-icons/ri';
 import { FieldValues, SubmitHandler } from 'react-hook-form';
@@ -18,6 +18,7 @@ import axios from 'axios';
 
 import { columns } from './_data';
 import AdminModal from './AdminModal';
+import { ChevronDownIcon } from '@chakra-ui/icons';
 
 export interface IAdmin {
   adminName: string;
@@ -138,9 +139,36 @@ const AdminsTable: FC<AdminsList> = ({admins}) => {
                     );
                   })}
                   <Td textAlign="right">
-                    <Button onClick={e => editAdminHandler(row)} variant="link" colorScheme="blue">
-                      Edit
-                    </Button>
+                    <Menu>
+                      {({ isOpen }) => (
+                        <>
+                          <MenuButton isActive={isOpen}
+                                      as={Button}
+                                      rightIcon={<ChevronDownIcon />}
+                                      outline='none'
+                                      background='none'
+                                      border='none'
+                                      _hover={{
+                                        background: 'none',
+                                        color: 'blue.500',
+                                        textDecoration: 'underline',
+                                        border: 'none'
+                                      }}
+                                      _active={{
+                                        background: 'none',
+                                        border: 'none',
+                                        outline: 'none'
+                                      }}
+                          >
+                            {'Action'}
+                          </MenuButton>
+                          <MenuList>
+                            <MenuItem onClick={() => editAdminHandler(row)}>Edit</MenuItem>
+                            <MenuItem onClick={() => alert(`Deleting admin - ${row.adminName}`)}>Delete</MenuItem>
+                          </MenuList>
+                        </>
+                      )}
+                    </Menu>
                   </Td>
                 </Tr>
               );
