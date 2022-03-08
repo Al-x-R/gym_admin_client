@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Box, Flex } from '@chakra-ui/react';
 import { Sidebar } from './Sidebar/Sidebar';
 import Navbar from './Navbar/Navbar';
-import Table from './Table/Table';
 import AdminsTable from './Admins';
 import axios from 'axios';
+import { useAppSelector } from '../hooks/redux';
 
 const Dashboard = () => {
   const [admins, setAdmins] = useState([]);
+  const {} = useAppSelector(state => state.adminReducer.admins);
 
   const getAllAdmins = async () => {
     const {data} = await axios.get('http://localhost:5000/api/admins');

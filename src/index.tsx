@@ -4,13 +4,19 @@ import ReactDOM from 'react-dom';
 import { App } from './App';
 import reportWebVitals from './reportWebVitals';
 import * as serviceWorker from './serviceWorker';
+import { Provider } from 'react-redux';
+import { setupStore } from './store/store';
+
+const store = setupStore();
 
 ReactDOM.render(
   <React.StrictMode>
-    <ChakraProvider theme={theme}>
-      <ColorModeScript/>
-      <App/>
-    </ChakraProvider>
+    <Provider store={store}>
+      <ChakraProvider theme={theme}>
+        <ColorModeScript/>
+        <App/>
+      </ChakraProvider>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root'),
 );
