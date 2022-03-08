@@ -10,7 +10,12 @@ import {
   Thead,
   Tr,
   useColorModeValue as mode,
-  useDisclosure, useToast, Menu, MenuButton, MenuList, MenuItem
+  useDisclosure,
+  useToast,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
 } from '@chakra-ui/react';
 import { RiAddFill } from 'react-icons/ri';
 import { FieldValues, SubmitHandler } from 'react-hook-form';
@@ -19,6 +24,7 @@ import axios from 'axios';
 import { columns } from './_data';
 import AdminModal from './AdminModal';
 import { ChevronDownIcon } from '@chakra-ui/icons';
+import DeleteAdminConfirmModal from './DeleteAdminConfirmModal';
 
 export interface IAdmin {
   adminName: string;
@@ -33,6 +39,7 @@ interface AdminsList {
 const AdminsTable: FC<AdminsList> = ({admins}) => {
   const {isOpen, onOpen, onClose} = useDisclosure();
   const {isOpen: isOpenEdit, onOpen: onOpenEdit, onClose: onCloseEdit} = useDisclosure();
+  const {isOpen: isOpenDeleteModal, onOpen: onOpenDeleteModal, onClose: onCloseDeleteModal} = useDisclosure();
   const [stateAdmin, setStateAdmin] = useState<IAdmin>();
   const toast = useToast();
 
@@ -68,8 +75,8 @@ const AdminsTable: FC<AdminsList> = ({admins}) => {
 
   const updateAdminHandler: SubmitHandler<FieldValues> = (values: { [x: string]: any; }) => {
     if (stateAdmin?.adminName === values.adminName && stateAdmin?.isSuper === values.isSuper) {
-      onCloseEdit()
-      return
+      onCloseEdit();
+      return;
     }
     axios.patch('http://localhost:5000/api/admins', {admin: values}, {
       headers: {
@@ -140,14 +147,14 @@ const AdminsTable: FC<AdminsList> = ({admins}) => {
                   })}
                   <Td textAlign="right">
                     <Menu>
-                      {({ isOpen }) => (
+                      {({isOpen}) => (
                         <>
                           <MenuButton isActive={isOpen}
                                       as={Button}
-                                      rightIcon={<ChevronDownIcon />}
-                                      outline='none'
-                                      background='none'
-                                      border='none'
+                                      rightIcon={<ChevronDownIcon/>}
+                                      outline="none"
+                                      background="none"
+                                      border="none"
                                       _hover={{
                                         background: 'none',
                                         color: 'blue.500',
@@ -159,12 +166,16 @@ const AdminsTable: FC<AdminsList> = ({admins}) => {
                                         border: 'none',
                                         outline: 'none'
                                       }}
+                                      _focus={{
+                                        border: 'none',
+                                        outline: 'none'
+                                      }}
                           >
                             {'Action'}
                           </MenuButton>
                           <MenuList>
-                            <MenuItem onClick={() => editAdminHandler(row)}>Edit</MenuItem>
-                            <MenuItem onClick={() => alert(`Deleting admin - ${row.adminName}`)}>Delete</MenuItem>
+                            <MenuItem onClick={() => editAdminModalOpenHandler(row)}>Edit</MenuItem>
+                            <MenuItem onClick={() => deleteAdminModalOpenHandler(row)}>Delete</MenuItem>
                           </MenuList>
                         </>
                       )}
@@ -178,6 +189,7 @@ const AdminsTable: FC<AdminsList> = ({admins}) => {
       </Box>
       <AdminModal isOpen={isOpen} onClose={onClose} onSubmit={createAdminHandler}/>
       <AdminModal admin={stateAdmin} isOpen={isOpenEdit} onClose={onCloseEdit} onSubmit={updateAdminHandler}/>
+      <DeleteAdminConfirmModal isOpen={isOpenDeleteModal} onClose={onCloseDeleteModal} onSubmit={deleteAdminHandler}/>
     </>
   );
 };
