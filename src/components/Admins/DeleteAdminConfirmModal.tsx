@@ -20,36 +20,28 @@ interface IModal {
 
 const DeleteAdminConfirmModal: FC<IModal> = ({isOpen,onClose,onSubmit }) => {
   return (
-    <Modal onClose={onClose} size={'sm'} isOpen={isOpen}>
+    <Modal onClose={onClose} size={'md'} isOpen={isOpen}>
       <ModalOverlay/>
       <ModalContent>
-        <ModalCloseButton/>
+        <ModalCloseButton _focus={{
+          outline: 'none'
+        }}/>
         <ModalHeader />
         <ModalBody>
           <Flex flexDir='column' align='center'>
             <WarningIcon w={10} h={10} my={3} color="red.500" />
             <Text fontSize='3xl' >Are you sure?</Text>
-            <Text fontSize='2xl'>This action cannot be undone!</Text>
+            <Text fontSize='2xl' fontWeight='semiBold' pt={3}>This action cannot be undone!</Text>
           </Flex>
         </ModalBody>
-        <ModalFooter>
+        <ModalFooter mt={4}>
           <Button size='md'
                   mr={3}
                   onClick={onSubmit}
-                  variant='ghost'
-                  color="red.500"
-                  _hover={{
-                    background: 'none',
-                    fontWeight: 'bold'
-                  }}
-          >Confirm</Button>
+                  colorScheme='red'
+          >Delete</Button>
           <Button size='md'
-                  variant='ghost'
                   onClick={onClose}
-                  _hover={{
-                    background: 'none',
-                    fontWeight: 'bold'
-                  }}
           >Close</Button>
         </ModalFooter>
       </ModalContent>
