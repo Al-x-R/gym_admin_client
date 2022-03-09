@@ -21,12 +21,7 @@ import { columns } from './_data';
 import AdminModal from './AdminModal';
 import DeleteAdminConfirmModal from './DeleteAdminConfirmModal';
 import AdminActionMenu from './AdminActionMenu';
-
-export interface IAdmin {
-  adminName: string;
-  id: number;
-  isSuper: boolean;
-}
+import { IAdmin } from '../../interfaces/admin.interface'
 
 interface AdminsList {
   admins: IAdmin[]

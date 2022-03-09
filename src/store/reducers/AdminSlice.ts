@@ -1,5 +1,5 @@
-import { IAdmin } from '../../components/Admins';
-import { createSlice } from '@reduxjs/toolkit';
+import { IAdmin } from '../../interfaces/admin.interface'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 
 interface AdminState {
@@ -17,7 +17,20 @@ const initialState: AdminState = {
 export const adminSlice = createSlice({
   name: 'admin',
   initialState,
-  reducers: {},
+  reducers: {
+    adminsFetching(state) {
+      state.isLoading = true
+    },
+    adminsFetchingSuccess(state, action: PayloadAction<IAdmin[]>) {
+      state.isLoading = false
+      state.error = ''
+      state.admins = action.payload
+    },
+    adminsFetchingError(state, action: PayloadAction<string>) {
+      state.isLoading = false
+      state.error = action.payload
+    }
+  },
   extraReducers: {}
 })
 

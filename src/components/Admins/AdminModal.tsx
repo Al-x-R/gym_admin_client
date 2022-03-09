@@ -9,7 +9,7 @@ import {
 } from '@chakra-ui/react';
 import AdminForm from './AdminForm';
 import { FieldValues, SubmitHandler } from 'react-hook-form';
-import { IAdmin } from './index';
+import { IAdmin } from '../../interfaces/admin.interface'
 
 interface IModal {
   isOpen: boolean;

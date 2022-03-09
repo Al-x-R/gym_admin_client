@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { Button, FormControl, FormLabel, Input, Stack, Switch } from '@chakra-ui/react';
 import { PasswordField } from '../Auth/PasswordField';
-import { IAdmin } from './index';
+import { IAdmin } from '../../interfaces/admin.interface'
 
 interface IAdminForm {
   onSubmit: SubmitHandler<FieldValues>;

@@ -1,31 +1,29 @@
-import React, { useEffect, useState } from 'react';
-import { Box, Flex } from '@chakra-ui/react';
+import React, { useEffect } from 'react';
+import { Box, CircularProgress, Flex } from '@chakra-ui/react';
 import { Sidebar } from './Sidebar/Sidebar';
 import Navbar from './Navbar/Navbar';
 import AdminsTable from './Admins';
-import axios from 'axios';
-import { useAppSelector } from '../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../hooks/redux';
+import { fetchAdmins } from '../store/reducers/ActionCreators';
 
 const Dashboard = () => {
-  const [admins, setAdmins] = useState([]);
-  const {} = useAppSelector(state => state.adminReducer.admins);
-
-  const getAllAdmins = async () => {
-    const {data} = await axios.get('http://localhost:5000/api/admins');
-    setAdmins(data[0]);
-  };
+  const dispatch = useAppDispatch();
+  const {admins, isLoading} = useAppSelector(state => state.adminReducer);
 
   useEffect(() => {
-    getAllAdmins();
+    dispatch(fetchAdmins());
   }, []);
 
   return (
     <Box maxH="100vh" overflow="hidden">
       <Navbar/>
-      <Flex>
+      <Flex position='relative'>
         <Sidebar/>
         <Box h="100%" w="100%" pr={4} pb={4}>
-          <AdminsTable admins={admins}/>
+          {isLoading
+            ? <CircularProgress isIndeterminate position='absolute' top='30%' left='50%'/>
+            : <AdminsTable admins={admins}/>
+          }
         </Box>
       </Flex>
     </Box>

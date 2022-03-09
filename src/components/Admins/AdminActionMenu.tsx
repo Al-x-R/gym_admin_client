@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Button, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
-import { IAdmin } from './index';
+import { IAdmin } from '../../interfaces/admin.interface'
 
 interface IAdminActionMenu {
   row: IAdmin;
