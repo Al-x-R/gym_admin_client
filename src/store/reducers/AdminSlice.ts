@@ -29,7 +29,32 @@ export const adminSlice = createSlice({
     adminsFetchingError(state, action: PayloadAction<string>) {
       state.isLoading = false
       state.error = action.payload
-    }
+    },
+    adminsCreate(state) {
+      state.isLoading = true
+    },
+    adminsCreateSuccess(state, action: PayloadAction<IAdmin>) {
+      state.isLoading = false
+      state.error = ''
+      state.admins.push(action.payload)
+    },
+    adminsCreateError(state, action: PayloadAction<string>) {
+      state.isLoading = false
+      state.error = action.payload
+    },
+    adminsDelete(state) {
+      state.isLoading = true
+      state.error = ''
+    },
+    adminsDeleteSuccess(state, action: PayloadAction<string>) {
+      state.isLoading = false
+      state.error = ''
+      state.admins = state.admins.filter(admin => admin.id !== Number(action.payload))
+    },
+    adminsDeleteError(state, action: PayloadAction<string>) {
+      state.isLoading = false
+      state.error = action.payload
+    },
   },
   extraReducers: {}
 })

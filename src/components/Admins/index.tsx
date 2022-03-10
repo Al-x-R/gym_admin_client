@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import {
   Box,
   Flex,
@@ -21,48 +21,24 @@ import { columns } from './_data';
 import AdminModal from './AdminModal';
 import DeleteAdminConfirmModal from './DeleteAdminConfirmModal';
 import AdminActionMenu from './AdminActionMenu';
-import { IAdmin } from '../../interfaces/admin.interface'
+import { IAdmin } from '../../interfaces/admin.interface';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { createAdmin, deleteAdmin } from '../../store/reducers/ActionCreators';
 
-interface AdminsList {
-  admins: IAdmin[]
+interface IAdminsTable {
+  admins: IAdmin[];
+  error: string;
+  createAdminHandler: SubmitHandler<FieldValues>;
 }
 
-const AdminsTable: FC<AdminsList> = ({admins}) => {
+const AdminsTable: FC<IAdminsTable> = ({admins, error, createAdminHandler}) => {
   const {isOpen, onOpen, onClose} = useDisclosure();
   const {isOpen: isOpenEdit, onOpen: onOpenEdit, onClose: onCloseEdit} = useDisclosure();
   const {isOpen: isOpenDeleteModal, onOpen: onOpenDeleteModal, onClose: onCloseDeleteModal} = useDisclosure();
   const [stateAdmin, setStateAdmin] = useState<IAdmin>();
   const toast = useToast();
+  const dispatch = useAppDispatch();
 
-  const createAdminHandler: SubmitHandler<FieldValues> = (values: { [x: string]: any; }) => {
-
-    axios.post('http://localhost:5000/api/admins', {admin: values}, {
-      headers: {
-        'Authorization': `Basic ${localStorage.getItem('token')}`
-      }
-    })
-      .then((response) => {
-        if (response.data) {
-          toast({
-            position: 'top',
-            title: 'Admin created',
-            status: 'success',
-            duration: 1500,
-            isClosable: true,
-          });
-          onClose();
-        }
-      })
-      .catch((error) => {
-        toast({
-          position: 'top',
-          title: error.response.data.message,
-          status: 'error',
-          duration: 5000,
-          isClosable: true,
-        });
-      });
-  };
 
   const updateAdminHandler: SubmitHandler<FieldValues> = (values: { [x: string]: any; }) => {
     if (stateAdmin?.adminName === values.adminName && stateAdmin?.isSuper === values.isSuper) {
@@ -98,34 +74,34 @@ const AdminsTable: FC<AdminsList> = ({admins}) => {
   };
 
   const deleteAdminHandler = () => {
-    if (!stateAdmin) return
-      ;
-    axios.delete('http://localhost:5000/api/admins', {
-      headers: {
-        'Authorization': `Basic ${localStorage.getItem('token')}`
-      }, data: {id: stateAdmin?.id}
-    })
-      .then((response) => {
-        if (response.data) {
-          toast({
-            position: 'top',
-            title: 'Admin successfully deleted',
-            status: 'success',
-            duration: 1500,
-            isClosable: true,
-          });
-          onCloseDeleteModal();
-        }
-      })
-      .catch((error) => {
-        toast({
-          position: 'top',
-          title: error.response.data.message,
-          status: 'error',
-          duration: 5000,
-          isClosable: true,
-        });
-      });
+    if (!stateAdmin) return;
+    dispatch(deleteAdmin(stateAdmin.id));
+    // axios.delete('http://localhost:5000/api/admins', {
+    //   headers: {
+    //     'Authorization': `Basic ${localStorage.getItem('token')}`
+    //   }, data: {id: stateAdmin?.id}
+    // })
+    //   .then((response) => {
+    //     if (response.data) {
+    //       toast({
+    //         position: 'top',
+    //         title: 'Admin successfully deleted',
+    //         status: 'success',
+    //         duration: 1500,
+    //         isClosable: true,
+    //       });
+    //       onCloseDeleteModal();
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     toast({
+    //       position: 'top',
+    //       title: error.response.data.message,
+    //       status: 'error',
+    //       duration: 5000,
+    //       isClosable: true,
+    //     });
+    //   });
   };
 
   const deleteAdminModalOpenHandler = (admin: IAdmin) => {
