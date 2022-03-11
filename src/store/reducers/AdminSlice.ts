@@ -30,28 +30,41 @@ export const adminSlice = createSlice({
       state.isLoading = false
       state.error = action.payload
     },
-    adminsCreate(state) {
+    adminCreate(state) {
       state.isLoading = true
     },
-    adminsCreateSuccess(state, action: PayloadAction<IAdmin>) {
+    adminCreateSuccess(state, action: PayloadAction<IAdmin>) {
       state.isLoading = false
       state.error = ''
       state.admins.push(action.payload)
     },
-    adminsCreateError(state, action: PayloadAction<string>) {
+    adminCreateError(state, action: PayloadAction<string>) {
       state.isLoading = false
       state.error = action.payload
     },
-    adminsDelete(state) {
+    adminDelete(state) {
       state.isLoading = true
       state.error = ''
     },
-    adminsDeleteSuccess(state, action: PayloadAction<string>) {
+    adminDeleteSuccess(state, action: PayloadAction<string>) {
       state.isLoading = false
       state.error = ''
       state.admins = state.admins.filter(admin => admin.id !== Number(action.payload))
     },
-    adminsDeleteError(state, action: PayloadAction<string>) {
+    adminDeleteError(state, action: PayloadAction<string>) {
+      state.isLoading = false
+      state.error = action.payload
+    },
+    adminUpdate(state) {
+      state.isLoading = true
+      state.error = ''
+    },
+    adminUpdateSuccess(state, action: PayloadAction<IAdmin>) {
+      state.isLoading = false
+      state.error = ''
+      state.admins = state.admins.map(item => item.id === action.payload.id ? action.payload : item)
+    },
+    adminUpdateError(state, action: PayloadAction<string>) {
       state.isLoading = false
       state.error = action.payload
     },

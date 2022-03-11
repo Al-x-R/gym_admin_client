@@ -23,7 +23,7 @@ import DeleteAdminConfirmModal from './DeleteAdminConfirmModal';
 import AdminActionMenu from './AdminActionMenu';
 import { IAdmin } from '../../interfaces/admin.interface';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { createAdmin, deleteAdmin } from '../../store/reducers/ActionCreators';
+import { createAdmin, deleteAdmin, updateAdmin } from '../../store/reducers/ActionCreators';
 
 interface IAdminsTable {
   admins: IAdmin[];
@@ -45,32 +45,33 @@ const AdminsTable: FC<IAdminsTable> = ({admins, error, createAdminHandler}) => {
       onCloseEdit();
       return;
     }
-    axios.patch('http://localhost:5000/api/admins', {admin: values}, {
-      headers: {
-        'Authorization': `Basic ${localStorage.getItem('token')}`
-      }
-    })
-      .then((response) => {
-        if (response.data) {
-          toast({
-            position: 'top',
-            title: 'Admin update',
-            status: 'success',
-            duration: 1500,
-            isClosable: true,
-          });
-          onCloseEdit();
-        }
-      })
-      .catch((error) => {
-        toast({
-          position: 'top',
-          title: error.response.data.message,
-          status: 'error',
-          duration: 5000,
-          isClosable: true,
-        });
-      });
+    dispatch(updateAdmin(values))
+    // axios.patch('http://localhost:5000/api/admins', {admin: values}, {
+    //   headers: {
+    //     'Authorization': `Basic ${localStorage.getItem('token')}`
+    //   }
+    // })
+    //   .then((response) => {
+    //     if (response.data) {
+    //       toast({
+    //         position: 'top',
+    //         title: 'Admin update',
+    //         status: 'success',
+    //         duration: 1500,
+    //         isClosable: true,
+    //       });
+    //       onCloseEdit();
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     toast({
+    //       position: 'top',
+    //       title: error.response.data.message,
+    //       status: 'error',
+    //       duration: 5000,
+    //       isClosable: true,
+    //     });
+    //   });
   };
 
   const deleteAdminHandler = () => {
