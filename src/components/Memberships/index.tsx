@@ -1,11 +1,14 @@
 import React from 'react';
-import { Box, Button, Table, Tbody, Td, Th, Thead, Tr, useColorModeValue as mode } from '@chakra-ui/react';
+import { Box, Table, Tbody, Td, Th, Thead, Tr, useColorModeValue as mode } from '@chakra-ui/react';
 import { columns, data } from './_data';
+import { MembershipTableActions } from './MembershipTableActions';
 
 const Memberships = () => {
   return (
-      <Box overflowY="auto" maxHeight="calc(100vh - 150px)" mt={2}>
-        <Table borderWidth="1px" fontSize="sm">
+    <>
+      <MembershipTableActions />
+      <Box overflowY="auto" maxHeight="calc(100vh - 150px)" mt={2} >
+        <Table borderWidth="1px" fontSize="sm" maxW='1200px'>
           <Thead position="sticky" top={0} bg={mode('gray.50', 'gray.800')}>
             <Tr h={10}>
               {columns.map((column, index) => (
@@ -36,6 +39,7 @@ const Memberships = () => {
           </Tbody>
         </Table>
       </Box>
+    </>
   );
 };
 

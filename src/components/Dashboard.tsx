@@ -13,7 +13,7 @@ const Dashboard = () => {
       <Navbar/>
       <Flex position="relative">
         <Sidebar setActiveTab={setActiveTab} activeTab={activeTab}/>
-        <Box h="100%" w="100%" pr={4} pb={4}>
+        <Box h="100%" w="100%" maxW='1200px' pr={4} pb={4}>
           <GeneralTable value={activeTab}/>
         </Box>
       </Flex>

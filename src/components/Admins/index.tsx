@@ -11,7 +11,7 @@ import {
   Tr,
   useColorModeValue as mode,
   useDisclosure,
-  useToast, CircularProgress,
+  useToast, CircularProgress
 } from '@chakra-ui/react';
 import { RiAddFill } from 'react-icons/ri';
 import { FieldValues, SubmitHandler } from 'react-hook-form';
@@ -72,8 +72,8 @@ const AdminsTable = () => {
       {isLoading
         ? <CircularProgress isIndeterminate position="absolute" top="30%" left="50%"/>
         : <>
-          <Flex justify="end" pt={1} pr={3}>
-            <Button onClick={onOpenCreate} iconSpacing="1" leftIcon={<RiAddFill fontSize="1em"/>}>
+          <Flex justify="end" pt={3} pb={1} >
+            <Button h={8} onClick={onOpenCreate} variant='outline' iconSpacing="1" leftIcon={<RiAddFill fontSize="1em"/>}>
               New member
             </Button>
           </Flex>
