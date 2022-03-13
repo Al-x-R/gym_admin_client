@@ -1,7 +1,6 @@
 import { Box, CircularProgress, CircularProgressLabel, Flex } from '@chakra-ui/react';
 import React from 'react';
 import { User } from './User';
-import { log } from 'util';
 
 export const data = [
   {

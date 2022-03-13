@@ -22,7 +22,7 @@ export const data = [
     lastName: 'last',
     email: 'email',
     mobile: '1234567890',
-    birthDate: Date.now(),
+    birthdate: Date.now(),
     photo: 'src'
   },
   {
@@ -31,7 +31,7 @@ export const data = [
     lastName: 'last',
     email: 'email',
     mobile: '1234567890',
-    birthDate: Date.now(),
+    birthdate: Date.now(),
     photo: 'src'
   },
   {
@@ -40,7 +40,7 @@ export const data = [
     lastName: 'last',
     email: 'email',
     mobile: '1234567890',
-    birthDate: Date.now(),
+    birthdate: Date.now(),
     photo: 'src'
   },
   {
@@ -49,7 +49,7 @@ export const data = [
     lastName: 'last',
     email: 'email',
     mobile: '1234567890',
-    birthDate: Date.now(),
+    birthdate: Date.now(),
     photo: 'src'
   },
   {
@@ -58,7 +58,7 @@ export const data = [
     lastName: 'last',
     email: 'email',
     mobile: '1234567890',
-    birthDate: Date.now(),
+    birthdate: Date.now(),
     photo: 'src'
   },
   {
@@ -67,7 +67,7 @@ export const data = [
     lastName: 'last',
     email: 'email',
     mobile: '1234567890',
-    birthDate: Date.now(),
+    birthdate: Date.now(),
     photo: 'src'
   },
   {
@@ -76,7 +76,7 @@ export const data = [
     lastName: 'last',
     email: 'email',
     mobile: '1234567890',
-    birthDate: Date.now(),
+    birthdate: Date.now(),
     photo: 'src'
   },
   ];
@@ -124,7 +124,7 @@ export const columns = [
   },
   {
     Header: 'Birth date',
-    accessor: 'birthDate',
+    accessor: 'birthdate',
     Cell: function BirthDateCell(data: any) {
       return (
         <Box  fontSize="sm" fontWeight="medium">
