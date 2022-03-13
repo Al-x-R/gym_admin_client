@@ -106,6 +106,7 @@ const NewClientForm = () => {
                   register={register('photo', {validate: validateFiles})}
                 >
                   <Button variant="outline"
+                          w='150px'
                           _focus={{outline: 'none'}}
                           leftIcon={<Icon as={FiFile}/>}
                   >
