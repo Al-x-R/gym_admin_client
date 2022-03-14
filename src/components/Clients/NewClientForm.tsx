@@ -1,11 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
-  FieldValues,
   SubmitHandler,
   useForm,
   Controller,
-  ControllerRenderProps,
-  Control,
 } from 'react-hook-form';
 import { FormErrorMessage, Box, Button, Flex, FormControl, FormLabel, Icon, Input, Stack, Switch } from '@chakra-ui/react';
 import DatePicker from 'react-datepicker';
@@ -31,9 +28,9 @@ const NewClientForm = () => {
   } = useForm<FormInputs>();
 
   const validateFiles = (value: FileList) => {
-    if (value.length < 1) {
-      return 'Files is required';
-    }
+    // if (value.length < 1) {
+    //   return 'Files is required';
+    // }
     for (const file of Array.from(value)) {
       const fsMb = file.size / (1024 * 1024);
       const MAX_FILE_SIZE = 10;
@@ -82,6 +79,7 @@ const NewClientForm = () => {
               </FormControl>
             </Flex>
 
+            <Flex maxW='390px' justify='space-between' flexWrap='wrap'>
             <Box w='190px'>
               <FormControl>
                 <FormLabel>Birth date</FormLabel>
@@ -98,11 +96,10 @@ const NewClientForm = () => {
                 />
               </FormControl>
             </Box>
-              <FormControl isInvalid={!!errors.photo}>
+              <FormControl w='150px' mb={10} isInvalid={!!errors.photo}>
                 <FormLabel>{'Photo'}</FormLabel>
                 <FileUpload
                   accept={'image/*'}
-                  multiple
                   register={register('photo', {validate: validateFiles})}
                 >
                   <Button variant="outline"
@@ -117,6 +114,7 @@ const NewClientForm = () => {
                   {errors.photo && errors?.photo.message}
                 </FormErrorMessage>
               </FormControl>
+            </Flex>
             <Button maxW="200px" type="submit" variant="outline" colorScheme="blue" size="lg" fontSize="md">
               Create
             </Button>
