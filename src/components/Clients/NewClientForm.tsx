@@ -4,11 +4,10 @@ import {
   useForm,
   Controller,
 } from 'react-hook-form';
-import { FormErrorMessage, Box, Button, Flex, FormControl, FormLabel, Icon, Input, Stack, Switch } from '@chakra-ui/react';
+import { Box, Button, Flex, FormControl, FormLabel, Input, Stack } from '@chakra-ui/react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import FileUpload from '../FileUpload';
-import { FiFile } from 'react-icons/all';
+import axios from 'axios';
 
 type FormInputs = {
   firstName: string;
@@ -16,7 +15,6 @@ type FormInputs = {
   email: string
   mobile: string
   birthdate: Date
-  photo: FileList
 }
 
 const NewClientForm = () => {
@@ -24,25 +22,19 @@ const NewClientForm = () => {
     handleSubmit,
     register,
     control,
-    formState: { errors }
+    formState: {errors}
   } = useForm<FormInputs>();
 
-  const validateFiles = (value: FileList) => {
-    // if (value.length < 1) {
-    //   return 'Files is required';
-    // }
-    for (const file of Array.from(value)) {
-      const fsMb = file.size / (1024 * 1024);
-      const MAX_FILE_SIZE = 10;
-      if (fsMb > MAX_FILE_SIZE) {
-        return 'Max file size 10mb';
-      }
-    }
-    return true;
-  };
-
   const onSubmit: SubmitHandler<FormInputs> = (values) => {
-    console.log('values', values);
+    axios.post('http://localhost:5000/api/client', {
+      client: {
+        firstName: values.firstName,
+        lastName: values.lastName,
+        email: values.email,
+        mobile: values.mobile,
+        birthdate: values.birthdate,
+      }
+    }).then(res => console.log(res));
   };
 
   return (
@@ -79,41 +71,23 @@ const NewClientForm = () => {
               </FormControl>
             </Flex>
 
-            <Flex maxW='390px' justify='space-between' flexWrap='wrap'>
-            <Box w='190px'>
-              <FormControl>
-                <FormLabel>Birth date</FormLabel>
-                <Controller name="birthdate"
-                            control={control}
-                            defaultValue={new Date}
-                            render={({field}) => (
-                              <DatePicker selected={field.value}
-                                          isClearable
-                                          onChange={(e) => field.onChange(e)}
-                                          customInput={<Input w={'150px'}/>}
-                              />
-                            )}
-                />
-              </FormControl>
-            </Box>
-              <FormControl w='150px' mb={10} isInvalid={!!errors.photo}>
-                <FormLabel>{'Photo'}</FormLabel>
-                <FileUpload
-                  accept={'image/*'}
-                  register={register('photo', {validate: validateFiles})}
-                >
-                  <Button variant="outline"
-                          w='150px'
-                          _focus={{outline: 'none'}}
-                          leftIcon={<Icon as={FiFile}/>}
-                  >
-                    Upload
-                  </Button>
-                </FileUpload>
-                <FormErrorMessage>
-                  {errors.photo && errors?.photo.message}
-                </FormErrorMessage>
-              </FormControl>
+            <Flex maxW="390px" justify="space-between" flexWrap="wrap">
+              <Box w="190px">
+                <FormControl>
+                  <FormLabel>Birth date</FormLabel>
+                  <Controller name="birthdate"
+                              control={control}
+                              defaultValue={new Date}
+                              render={({field}) => (
+                                <DatePicker selected={field.value}
+                                            isClearable
+                                            onChange={(e) => field.onChange(e)}
+                                            customInput={<Input w={'150px'}/>}
+                                />
+                              )}
+                  />
+                </FormControl>
+              </Box>
             </Flex>
             <Button maxW="200px" type="submit" variant="outline" colorScheme="blue" size="lg" fontSize="md">
               Create
