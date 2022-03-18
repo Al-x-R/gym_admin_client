@@ -6,7 +6,7 @@ import { TableType } from '../types';
 import GeneralTable from './GeneralTable';
 
 const Dashboard = () => {
-  const [activeTab, setActiveTab] = useState<TableType>('Admins');
+  const [activeTab, setActiveTab] = useState<TableType>('Clients');
 
   return (
     <Box maxH="100vh" overflow="hidden">

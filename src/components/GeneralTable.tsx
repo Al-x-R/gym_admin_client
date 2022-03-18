@@ -4,6 +4,7 @@ import Clients from './Clients';
 import Memberships from './Memberships';
 import AdminsTable from './Admins';
 import Table from '../components/Table/Table'
+import ClientCard from '../components/Clients/ClientCard';
 
 interface ITable {
   value: TableType;
@@ -19,6 +20,8 @@ const GeneralTable: FC<ITable> = ({value})  => {
       return <AdminsTable />
     case 'Trainers':
       return <Table />
+    case 'Statistics':
+      return <ClientCard />
     default:
       return <Clients />
   }
