@@ -28,17 +28,18 @@ const NewClientForm = () => {
   const [image, setImage] = useState<File>();
 
   const onSubmit: SubmitHandler<FormInputs> = (values) => {
-    axios.post('http://localhost:5000/api/client', {
-      client: {
-        firstName: values.firstName,
-        lastName: values.lastName,
-        email: values.email,
-        mobile: values.mobile,
-        birthdate: values.birthdate,
-        image: image
-      }
-    }).then(res => console.log(res));
+    const formData = new FormData();
+    formData.append('firstName', values.firstName);
+    formData.append('lastName', values.lastName);
+    formData.append('email', values.email);
+    formData.append('mobile', values.mobile);
+    formData.append('birthdate', String(values.birthdate));
+
+    if (image) formData.append('image', image, image.name);
+
+    axios.post('http://localhost:5000/api/client', formData).then(res => console.log(res));
   };
+
 
   return (
     <Flex w="100%" align="center" justify="start">
