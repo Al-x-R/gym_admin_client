@@ -1,20 +1,23 @@
-import { ReactNode, useRef } from 'react';
+import React, { ReactNode, useRef, FC } from 'react';
 import { InputGroup } from '@chakra-ui/react';
-import { UseFormRegisterReturn } from 'react-hook-form';
 
 type FileUploadProps = {
-  register: UseFormRegisterReturn
   accept?: string
   multiple?: boolean
   children?: ReactNode
+  setFile: Function;
 }
 
-const FileUpload = (props: FileUploadProps) => {
-  const {register, accept, multiple, children} = props;
+const FileUpload: FC<FileUploadProps> = ({accept, multiple, children, setFile}) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const {ref, ...rest} = register as { ref: (instance: HTMLInputElement | null) => void };
 
   const handleClick = () => inputRef.current?.click();
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setFile(e.target.files[0]);
+    }
+  }
 
   return (
     <InputGroup onClick={handleClick}>
@@ -23,11 +26,8 @@ const FileUpload = (props: FileUploadProps) => {
         multiple={multiple || false}
         hidden
         accept={accept}
-        {...rest}
-        ref={(e) => {
-          ref(e)
-          inputRef.current = e
-        }}
+        ref={inputRef}
+        onChange={onChange}
       />
       <>
         {children}
