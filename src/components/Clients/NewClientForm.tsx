@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   SubmitHandler,
   useForm,
   Controller,
 } from 'react-hook-form';
-import { Box, Button, Flex, FormControl, FormLabel, Input, Stack } from '@chakra-ui/react';
+import { Box, Button, Flex, FormControl, FormLabel, Icon, Input, Stack } from '@chakra-ui/react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import axios from 'axios';
+import UploadProfileImage from '../UploadProfileImage';
 
 type FormInputs = {
   firstName: string;
@@ -24,6 +25,7 @@ const NewClientForm = () => {
     control,
     formState: {errors}
   } = useForm<FormInputs>();
+  const [image, setImage] = useState<File>();
 
   const onSubmit: SubmitHandler<FormInputs> = (values) => {
     axios.post('http://localhost:5000/api/client', {
@@ -33,6 +35,7 @@ const NewClientForm = () => {
         email: values.email,
         mobile: values.mobile,
         birthdate: values.birthdate,
+        image: image
       }
     }).then(res => console.log(res));
   };
@@ -71,23 +74,25 @@ const NewClientForm = () => {
               </FormControl>
             </Flex>
 
-            <Flex maxW="390px" justify="space-between" flexWrap="wrap">
-              <Box w="190px">
-                <FormControl>
-                  <FormLabel>Birth date</FormLabel>
-                  <Controller name="birthdate"
-                              control={control}
-                              defaultValue={new Date}
-                              render={({field}) => (
-                                <DatePicker selected={field.value}
-                                            isClearable
-                                            onChange={(e) => field.onChange(e)}
-                                            customInput={<Input w={'150px'}/>}
-                                />
-                              )}
-                  />
-                </FormControl>
+            <Flex maxW="420px" justify="space-between" flexWrap="wrap" pb={5}>
+              <Box>
+                <FormLabel>Upload profile image</FormLabel>
+                <UploadProfileImage image={image} setImage={setImage}/>
               </Box>
+              <FormControl w="190px">
+                <FormLabel>Birth date</FormLabel>
+                <Controller name="birthdate"
+                            control={control}
+                            defaultValue={new Date}
+                            render={({field}) => (
+                              <DatePicker selected={field.value}
+                                          isClearable
+                                          onChange={(e) => field.onChange(e)}
+                                          customInput={<Input w={'150px'}/>}
+                              />
+                            )}
+                />
+              </FormControl>
             </Flex>
             <Button maxW="200px" type="submit" variant="outline" colorScheme="blue" size="lg" fontSize="md">
               Create
